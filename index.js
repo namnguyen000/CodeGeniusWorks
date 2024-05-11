@@ -1,20 +1,12 @@
-function detectCycle(head) {
-  let slow = head;
-  let fast = head;
-  let hasCycle = false;
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-    if (slow === fast) {
-      hasCycle = true;
-      break;
+function moveZeroes(nums) {
+  let index = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      nums[index++] = nums[i];
     }
   }
-  if (!hasCycle) return null;
-  slow = head;
-  while (slow !== fast) {
-    slow = slow.next;
-    fast = fast.next;
+  for (let i = index; i < nums.length; i++) {
+    nums[i] = 0;
   }
-  return slow;
+  return nums;
 }
