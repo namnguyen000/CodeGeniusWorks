@@ -1,22 +1,20 @@
-function removeKdigits(num, k) {
-  const stack = [];
-  for (const digit of num) {
-    while (k > 0 && stack.length && stack[stack.length - 1] > digit) {
-      stack.pop();
-      k--;
+function isAlienSorted(words, order) {
+  const dict = new Map();
+  for (let i = 0; i < order.length; i++) {
+    dict.set(order[i], i);
+  }
+  for (let i = 0; i < words.length - 1; i++) {
+    const word1 = words[i];
+    const word2 = words[i + 1];
+    let found = false;
+    for (let j = 0; j < Math.min(word1.length, word2.length); j++) {
+      if (word1[j] !== word2[j]) {
+        if (dict.get(word1[j]) > dict.get(word2[j])) return false;
+        found = true;
+        break;
+      }
     }
-    stack.push(digit);
+    if (!found && word1.length > word2.length) return false;
   }
-  while (k > 0) {
-    stack.pop();
-    k--;
-  }
-  let result = "";
-  let leadingZero = true;
-  for (const digit of stack) {
-    if (leadingZero && digit === "0") continue;
-    leadingZero = false;
-    result += digit;
-  }
-  return result || "0";
+  return true;
 }
